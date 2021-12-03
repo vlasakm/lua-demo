@@ -7,6 +7,15 @@ Tested with:
 
     env LUA_CPATH="build/?.so;/usr/lib/lua/5.4/?.so" ./build/main 'print(require("mylib").mykey)' 'print(require("lpeg"))'
 
+For MinGW:
+
+    cmake -S . -B build-w64 -DCMAKE_TOOLCHAIN_FILE=cross-windows.cmake -DCMAKE_BUILD_TYPE=Release
+    cmake --build build-w64
+
+MinGW tested with:
+
+    env LUA_CPATH="build-w64/?.dll" ./build-w64/main.exe 'print(require("mylib").mykey)'
+
 This example showcases an application statically linking Lua, that still wants
 to make it possible to use external Lua C modules.
 
@@ -32,3 +41,8 @@ manually marks all private symbols with "internal" visibility.
 
 See the `readelf*` files for `readelf -a` output before and after full strip
 (`strip -s`).
+
+On Windows actually the same approach works as well, one just has to be
+carefull about where to pass `dllimport` and where `dllexport` and the module
+is actually linked against the main binary -- so that it finds the symbols in
+its import library.

@@ -49,6 +49,11 @@ if (UNIX)
 endif (UNIX)
 target_link_libraries(luastatic PUBLIC lua)
 
+if (WIN32)
+	target_compile_definitions(lua INTERFACE LUA_BUILD_AS_DLL)
+	target_compile_definitions(luastatic PUBLIC LMTX_EXE)
+endif (WIN32)
+
 #
 # main executable (links lua statically, exports its symbols for "plugins")
 #
@@ -67,4 +72,4 @@ add_library(module SHARED
 	module.c
 )
 set_target_properties(module PROPERTIES PREFIX "" OUTPUT_NAME "mylib")
-target_link_libraries(module PRIVATE lua)
+target_link_libraries(module main)

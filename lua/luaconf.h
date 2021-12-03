@@ -271,7 +271,7 @@
 */
 #if defined(LUA_BUILD_AS_DLL)	/* { */
 
-#if defined(LUA_CORE) || defined(LUA_LIB)	/* { */
+#if defined(LUA_CORE) || defined(LUA_LIB) || defined(LMTX_EXE)	/* { */
 #define LUA_API __declspec(dllexport)
 #else						/* }{ */
 #define LUA_API __declspec(dllimport)
